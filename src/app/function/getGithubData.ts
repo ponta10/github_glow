@@ -11,6 +11,26 @@ export async function getGithubData(
                 email
                 avatarUrl
                 pullRequests { totalCount }
+                issues { totalCount }
+                issueComments { totalCount }
+                contributionsCollection(from: $from, to: $to) {
+                    repositoryContributions(first: 100) {
+                        nodes {
+                            repository {
+                                name
+                                languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+                                    edges {
+                                        size
+                                        node {
+                                            name
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                contributionsCollection(from: $from, to: $to) { totalCommitContributions }
             }
         }
     `;
@@ -67,6 +87,10 @@ export async function getGithubData(
         avatarUrl: user.avatarUrl,
       },
       prCount: user.pullRequests.totalCount,
+      issueCount: user.issues.totalCount,
+      reviewCount: user.issueComments.totalCount,
+      commitCount: user.contributionsCollection.totalCommitContributions,
+      repoLanguageData: languagePercent,
     };
   } catch (error) {
     console.error("Error fetching data: ", error);
