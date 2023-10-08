@@ -14,6 +14,12 @@ export async function getGithubData(
                 issues { totalCount }
                 issueComments { totalCount }
                 contributionsCollection(from: $from, to: $to) {
+                    totalRepositoryContributions
+                    contributionCalendar {totalContributions}
+                    totalCommitContributions
+                    totalPullRequestContributions
+                    totalIssueContributions
+                    totalPullRequestReviewContributions
                     repositoryContributions(first: 100) {
                         nodes {
                             repository {
@@ -30,7 +36,6 @@ export async function getGithubData(
                         }
                     }
                 }
-                contributionsCollection(from: $from, to: $to) { totalCommitContributions }
             }
         }
     `;
@@ -86,11 +91,13 @@ export async function getGithubData(
         email: user.email,
         avatarUrl: user.avatarUrl,
       },
-      prCount: user.pullRequests.totalCount,
-      issueCount: user.issues.totalCount,
-      reviewCount: user.issueComments.totalCount,
+      prCount: user.contributionsCollection.totalPullRequestContributions,
+      issueCount: user.contributionsCollection.totalIssueContributions,
+      reviewCount: user.contributionsCollection.totalPullRequestReviewContributions,
       commitCount: user.contributionsCollection.totalCommitContributions,
       repoLanguageData: languagePercent,
+      total: user.contributionsCollection.contributionCalendar.totalContributions,
+      commitRepo: user.contributionsCollection.totalRepositoryContributions,
     };
   } catch (error) {
     console.error("Error fetching data: ", error);

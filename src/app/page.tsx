@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session?.accessToken) {
-      getGithubData(session.accessToken, "2022-10-06T00:00:00", "2023-04-06T00:00:00")
+      getGithubData(session.accessToken, "2022-10-06T00:00:00", "2023-10-06T00:00:00")
         .then((data) => {
           console.log(data);
         })
