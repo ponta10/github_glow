@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/three": "^0.156.0",
     "axios": "^1.5.1",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "node-fetch": "^3.3.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "three": "^0.157.0"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -9,3 +9,15 @@ declare module "next-auth" {
     error?: string;
   }
 }
+
+declare module 'three/examples/jsm/loaders/GLTFLoader' {
+  import { LoadingManager, Group } from 'three';
+  export class GLTFLoader {
+    constructor(loadingManager?: LoadingManager);
+    load(url: string, onLoad: (gltf: GLTF) => void, onProgress?: (event: ProgressEvent) => void, onError?: (event: ErrorEvent) => void): void;
+  }
+
+  export interface GLTF {
+    scene: Group;
+  }
+}

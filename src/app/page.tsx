@@ -3,6 +3,7 @@
 import { getGithubData } from "@/app/function/getGithubData";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
+import ThreeScene from "./components/3d/ThreeScene";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -48,6 +49,7 @@ export default function Home() {
           </button>
         )}
       </div>
+      <ThreeScene />
     </main>
   );
 }
