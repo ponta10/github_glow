@@ -10,12 +10,19 @@ function Cactus({ position, scale }: any) {
 
 function Desert() {
     const sandTexture = useTexture('/desert2.jpeg');
+    const numCacti = 100;
+    const positions = Array.from({ length: numCacti }, () => ([
+        (Math.random() - 0.5) * 20,
+        -0.8,                      
+        (Math.random() - 0.5) * 20
+    ]));
     return (
         <>
             <ambientLight intensity={0.5} />
             <directionalLight position={[0, 10, 5]} intensity={1} color={'#ffffff'} />
-            <Cactus key="cactus1" position={[0, -0.5, -2]} scale={[6, 6, 6]} />
-            <Cactus key="cactus2" position={[3, -0.5, -2]} scale={[6, 6, 6]} />
+            {positions.map((position, index) => (
+                <Cactus key={index} position={position} scale={[6, 6, 6]} />
+            ))}
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
                 <planeGeometry args={[20, 20, 100, 100]} />
                 <meshStandardMaterial map={sandTexture} />
@@ -25,10 +32,11 @@ function Desert() {
 }
 
 
+
 export default function DesertScene() {
   return (
     <Canvas style={{ width: '100%', height: '100vh' }}>
-      <OrbitControls />
+      {/* <OrbitControls /> */}
       <Sky sunPosition={[0, 1, 0]} />
       <Desert />
     </Canvas>
