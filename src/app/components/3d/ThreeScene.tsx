@@ -1,9 +1,11 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sky, useGLTF, useTexture } from '@react-three/drei';
+import { useMemo } from 'react';
 
-function Cactus({ position, scale }: any) {  // scaleプロパティを受け取る
-    const { scene } = useGLTF('/air_plant_v1.0.glb');
-    return <primitive object={scene} position={position} scale={scale} />;  // scaleプロパティをprimitiveコンポーネントに渡す
+function Cactus({ position, scale }: any) {
+    const gltf = useGLTF('/air_plant_v1.0.glb');
+    const scene = useMemo(() => gltf.scene.clone(), [gltf]);
+    return <primitive object={scene} position={position} scale={scale} />;
 }
 
 function Desert() {
@@ -12,7 +14,8 @@ function Desert() {
         <>
             <ambientLight intensity={0.5} />
             <directionalLight position={[0, 10, 5]} intensity={1} color={'#ffffff'} />
-            <Cactus position={[0, -0.5, -2]} scale={[6, 6, 6]} />  // 植物のサイズを2倍にする
+            <Cactus key="cactus1" position={[0, -0.5, -2]} scale={[6, 6, 6]} />
+            <Cactus key="cactus2" position={[3, -0.5, -2]} scale={[6, 6, 6]} />
             <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
                 <planeGeometry args={[20, 20, 100, 100]} />
                 <meshStandardMaterial map={sandTexture} />
