@@ -1,49 +1,34 @@
-// components/ThreeScene.tsx
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Sky, useGLTF, useTexture } from '@react-three/drei';
 
-const ThreeScene: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+function Cactus({ position, scale }: any) {  // scaleプロパティを受け取る
+    const { scene } = useGLTF('/air_plant_v1.0.glb');
+    return <primitive object={scene} position={position} scale={scale} />;  // scaleプロパティをprimitiveコンポーネントに渡す
+}
 
-  useEffect(() => {
-    if (containerRef.current === null) return;
+function Desert() {
+    const sandTexture = useTexture('/desert2.jpeg');
+    return (
+        <>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[0, 10, 5]} intensity={1} color={'#ffffff'} />
+            <Cactus position={[0, -0.5, -2]} scale={[6, 6, 6]} />  // 植物のサイズを2倍にする
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
+                <planeGeometry args={[20, 20, 100, 100]} />
+                <meshStandardMaterial map={sandTexture} />
+            </mesh>
+        </>
+    );
+}
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    containerRef.current.appendChild(renderer.domElement);
 
-    const textureLoader = new THREE.TextureLoader();
-    const groundTexture = textureLoader.load('desert.jpeg');
-    groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
-    groundTexture.repeat.set(25, 25);
+export default function DesertScene() {
+  return (
+    <Canvas style={{ width: '100%', height: '100vh' }}>
+      <OrbitControls />
+      <Sky sunPosition={[0, 1, 0]} />
+      <Desert />
+    </Canvas>
+  );
+}
 
-    const groundMaterial = new THREE.MeshBasicMaterial({ map: groundTexture });
-    const groundGeometry = new THREE.PlaneGeometry(500, 500);
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = - Math.PI / 2;
-
-    scene.add(ground);
-
-    camera.position.y = 50; 
-    camera.lookAt(0, 0, 0);
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.removeChild(renderer.domElement);
-      }
-    };
-  }, []);
-
-  return <div ref={containerRef}></div>;
-};
-
-export default ThreeScene;
