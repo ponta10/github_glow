@@ -10,7 +10,11 @@ export default function Home() {
 
   useEffect(() => {
     if (session?.accessToken) {
-      getGithubData(session.accessToken, "2022-10-06T00:00:00", "2023-10-06T00:00:00")
+      getGithubData(
+        session.accessToken,
+        "2022-10-06T00:00:00",
+        "2023-10-06T00:00:00"
+      )
         .then((data) => {
           console.log(data);
         })
@@ -50,6 +54,22 @@ export default function Home() {
     //     )}
     //   </div>
     // </main>
-    <ThreeScene />
+    <>
+      <header
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 2,
+          width: "100vw",
+          height: "100px",
+          backgroundColor: "#fff",
+          boxShadow: "2px 2px 5px rgba(0,0,0,0.2)",
+        }}
+      >
+        <button onClick={() => console.log("aaa")}>押して</button>
+      </header>
+      <ThreeScene />
+    </>
   );
 }
