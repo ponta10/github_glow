@@ -1,11 +1,24 @@
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Sky, useTexture } from "@react-three/drei";
 import { Cactus, Corn, Flower, Plant, Tomato } from "./Plant";
+
+const MyCamera = () => {
+    const { camera, gl } = useThree();
+    camera.position.z = 12;
+    camera.position.y = 2;
+    camera.lookAt(0, 0, 0);
+    return null;
+  };
 
 function Desert() {
   const sandTexture = useTexture("/desert2.jpeg");
   const numCacti = 100;
   const positions = Array.from({ length: numCacti }, () => [
+    (Math.random() - 0.5) * 20,
+    -0.8,
+    (Math.random() - 0.5) * 20,
+  ]);
+  const positions2 = Array.from({ length: numCacti - 80 }, () => [
     (Math.random() - 0.5) * 20,
     -0.8,
     (Math.random() - 0.5) * 20,
@@ -20,7 +33,9 @@ function Desert() {
       <Plant key={101} position={[0, -1, 1]} scale={[0.002, 0.002, 0.002]} />
       <Flower key={102} position={[0.25, -1, 1]} scale={[0.05, 0.05, 0.05]} />
       <Tomato key={103} position={[2, -1, 1]} scale={[1.5, 1.5, 1.5]} />
-      <Corn key={104} position={[-2, -1, 1]} scale={[1, 1, 1]} />
+      {positions2.map((position, index) => (
+        <Corn key={index} position={position} scale={[1, 1, 1]} />
+      ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <planeGeometry args={[20, 20, 100, 100]} />
         <meshStandardMaterial map={sandTexture} />
@@ -32,6 +47,7 @@ function Desert() {
 export default function DesertScene() {
   return (
     <Canvas style={{ width: "100%", height: "100vh" }}>
+        <MyCamera />
       <OrbitControls />
       <Sky
         sunPosition={[0, 0.08, -0.15]}
