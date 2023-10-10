@@ -17,9 +17,9 @@ function Desert() {
       {positions.map((position, index) => (
         <Cactus key={index} position={position} scale={[6, 6, 6]} />
       ))}
-      <Plant key={101} position={[0, -1, 1]} scale={[0.005, 0.005, 0.005]} />
-      <Flower key={102} position={[1, -1, 1]} scale={[0.1, 0.1, 0.1]} />
-      <Tomato key={103} position={[2, -1, 1]} scale={[1, 1, 1]} />
+      <Plant key={101} position={[0, -1, 1]} scale={[0.002, 0.002, 0.002]} />
+      <Flower key={102} position={[0.25, -1, 1]} scale={[0.05, 0.05, 0.05]} />
+      <Tomato key={103} position={[2, -1, 1]} scale={[1.5, 1.5, 1.5]} />
       <Corn key={104} position={[-2, -1, 1]} scale={[1, 1, 1]} />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <planeGeometry args={[20, 20, 100, 100]} />

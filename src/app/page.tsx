@@ -4,6 +4,8 @@ import { getGithubData } from "@/app/function/getGithubData";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import ThreeScene from "./components/3d/ThreeScene";
+import Image from "next/image";
+import logo from "../../public/logo.png";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -55,19 +57,9 @@ export default function Home() {
     //   </div>
     // </main>
     <>
-      <header
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          zIndex: 2,
-          width: "100vw",
-          height: "100px",
-          backgroundColor: "#fff",
-          boxShadow: "2px 2px 5px rgba(0,0,0,0.2)",
-        }}
-      >
-        <button onClick={() => console.log("aaa")}>押して</button>
+      <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
+        <Image width={200} height={100} alt="logo" src={logo} />
+        <button className="btn">データを見る</button>
       </header>
       <ThreeScene />
     </>
