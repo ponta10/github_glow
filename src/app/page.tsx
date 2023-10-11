@@ -1,8 +1,8 @@
-import { getGithubData } from "@/app/function/getGithubData";
+import { getGithubData } from "@/function/getGithubData";
 import { getServerSession } from "next-auth/next";
 import { nextAuthOptions } from "@/libs/next-auth/options";
-import { Top } from "./components/Top";
-import SignInButton from "./components/Button/SignIn";
+import { Top } from "../components/Top";
+import SignInButton from "../components/Button/SignIn";
 import Image from "next/image";
 import logo from "../../public/logoWhite.png";
 import field from "../../public/field.jpg";
