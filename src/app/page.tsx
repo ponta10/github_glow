@@ -1,32 +1,18 @@
-"use client";
-
 import { getGithubData } from "@/app/function/getGithubData";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import ThreeScene from "./components/3d/ThreeScene";
 import Image from "next/image";
 import logo from "../../public/logo.png";
+import { getServerSession } from "next-auth/next"
+import { nextAuthOptions } from "@/libs/next-auth/options";
 
-export default function Home() {
-  const { data: session } = useSession();
-
-  useEffect(() => {
-    if (session?.accessToken) {
-      getGithubData(
-        session.accessToken,
-        "2022-10-06T00:00:00",
-        "2023-10-06T00:00:00"
-      )
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((error) => {
-          console.error("Error fetching data: ", error);
-        });
-    }
-  }, [session]);
+export default async function Home() {
+  const session = await getServerSession(nextAuthOptions)
+  const githubData = await getGithubData(session?.accessToken ?? '', "2022-08-01T00:00:00", "2023-08-01T00:00:00" );
 
   return (
+    <p>{githubData.user.name}</p>
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     //   <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
     //     <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
@@ -56,12 +42,12 @@ export default function Home() {
     //     )}
     //   </div>
     // </main>
-    <>
-      <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
-        <Image width={200} height={100} alt="logo" src={logo} />
-        <button className="btn">データを見る</button>
-      </header>
-      <ThreeScene />
-    </>
+    // <>
+    //   <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
+    //     <Image width={200} height={100} alt="logo" src={logo} />
+    //     <button className="btn">データを見る</button>
+    //   </header>
+    //   <ThreeScene />
+    // </>
   );
 }
