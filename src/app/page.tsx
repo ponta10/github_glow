@@ -1,53 +1,41 @@
 import { getGithubData } from "@/app/function/getGithubData";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
-import ThreeScene from "./components/3d/ThreeScene";
-import Image from "next/image";
-import logo from "../../public/logo.png";
-import { getServerSession } from "next-auth/next"
+import { getServerSession } from "next-auth/next";
 import { nextAuthOptions } from "@/libs/next-auth/options";
+import { Top } from "./components/Top";
+import SignInButton from "./components/Button/SignIn";
+import Image from "next/image";
+import logo from "../../public/logoWhite.png";
+import field from "../../public/field.jpg";
 
 export default async function Home() {
-  const session = await getServerSession(nextAuthOptions)
-  const githubData = await getGithubData(session?.accessToken ?? '', "2022-08-01T00:00:00", "2023-08-01T00:00:00" );
+  const session = await getServerSession(nextAuthOptions);
 
-  return (
-    <p>{githubData.user.name}</p>
-    // <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    //   <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-    //     <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-    //       Get started by editing&nbsp; Hello&nbsp;
-    //       <code className="font-mono font-bold">src/app/page.tsx</code>
-    //       <code className="font-mono font-bold">
-    //         {session?.user?.name ?? "guest"}
-    //       </code>
-    //     </p>
+  if (!session) {
+    return (
+      <div
+        style={{
+          background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${field.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        className="w-screen h-screen relative"
+      >
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center z-10 flex flex-col gap-8">
+          <Image width={600} height={80} alt="logo" src={logo} priority />
+          <SignInButton />
+          <p className="text-white text-xl">
+            〜あなたのGitHubに応じて畑が育つ〜
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-    //     {!session && (
-    //       <button
-    //         onClick={() => signIn()}
-    //         className="flex w-full justify-center border-2 border-b border-red-300 hover:border-red-400 bg-red-200 hover:bg-red-300 pb-6 pt-8 backdrop-blur-2xl dark:border-red-800 dark:hover:border-red-900 dark:bg-red-800/50 dark:hover:bg-red-900/30 lg:static lg:w-auto lg:rounded-xl lg:p-4"
-    //       >
-    //         Sign In
-    //       </button>
-    //     )}
-
-    //     {session && (
-    //       <button
-    //         onClick={() => signOut()}
-    //         className="flex w-full justify-center border-2 border-b border-green-300 bg-green-200 pb-6 pt-8 backdrop-blur-2xl dark:border-green-800 dark:bg-green-800/30 lg:static lg:w-auto lg:rounded-xl lg:p-4 hover:border-green-400 hover:bg-green-300 dark:hover:border-green-900 dark:hover:bg-green-900/30"
-    //       >
-    //         Sign Out
-    //       </button>
-    //     )}
-    //   </div>
-    // </main>
-    // <>
-    //   <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
-    //     <Image width={200} height={100} alt="logo" src={logo} />
-    //     <button className="btn">データを見る</button>
-    //   </header>
-    //   <ThreeScene />
-    // </>
+  const githubData = await getGithubData(
+    session?.accessToken ?? "",
+    "2022-08-01T00:00:00",
+    "2023-08-01T00:00:00"
   );
+
+  return <Top />;
 }

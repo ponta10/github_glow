@@ -1,9 +1,10 @@
+"use client"
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Sky, useTexture } from "@react-three/drei";
 import { Cactus, Corn, Flower, Plant, Tomato } from "./Plant";
 
 const MyCamera = () => {
-    const { camera, gl } = useThree();
+    const { camera } = useThree();
     camera.position.z = 12;
     camera.position.y = 2;
     camera.lookAt(0, 0, 0);
