@@ -6,6 +6,7 @@ import SignInButton from "../components/Button/SignIn";
 import Image from "next/image";
 import logo from "../../public/logoWhite.png";
 import field from "../../public/field.jpg";
+import { getGithubDetailData } from "@/function/getGithubDetailData";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -33,8 +34,8 @@ export default async function Home() {
 
   const githubData = await getGithubData(
     session?.accessToken ?? "",
-    "2022-08-01T00:00:00",
-    "2023-08-01T00:00:00"
+    "2022-09-01T00:00:00",
+    "2023-08-31T00:00:00"
   );
 
   return <Top />;
