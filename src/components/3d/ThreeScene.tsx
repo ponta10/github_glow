@@ -1,25 +1,41 @@
-"use client"
+"use client";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Sky, useTexture } from "@react-three/drei";
-import { Cactus, Corn, Flower, Plant, Tomato } from "./Plant";
+import { Cactus, Corn, Flower, Plant } from "./Plant";
+
+interface DesertSceneProps {
+  data: number;
+}
 
 const MyCamera = () => {
-    const { camera } = useThree();
-    camera.position.z = 12;
-    camera.position.y = 2;
-    camera.lookAt(0, 0, 0);
-    return null;
-  };
+  const { camera } = useThree();
+  camera.position.z = 12;
+  camera.position.y = 2;
+  camera.lookAt(0, 0, 0);
+  return null;
+};
 
-function Desert() {
+const Desert: React.FC<DesertSceneProps> = ({
+  data
+}) => {
   const sandTexture = useTexture("/desert2.jpeg");
-  const numCacti = 100;
+  const numCacti = data;
   const positions = Array.from({ length: numCacti }, () => [
     (Math.random() - 0.5) * 20,
     -0.8,
     (Math.random() - 0.5) * 20,
   ]);
-  const positions2 = Array.from({ length: numCacti - 80 }, () => [
+  const plantPositions = Array.from({ length: numCacti - 500 }, () => [
+    (Math.random() - 0.5) * 20,
+    -0.8,
+    (Math.random() - 0.5) * 20,
+  ]);
+  const flowerPositions = Array.from({ length: numCacti - 1000 }, () => [
+    (Math.random() - 0.5) * 20,
+    -0.8,
+    (Math.random() - 0.5) * 20,
+  ]);
+  const cornPositions = Array.from({ length: numCacti - 5000 }, () => [
     (Math.random() - 0.5) * 20,
     -0.8,
     (Math.random() - 0.5) * 20,
@@ -31,10 +47,13 @@ function Desert() {
       {positions.map((position, index) => (
         <Cactus key={index} position={position} scale={[6, 6, 6]} />
       ))}
-      <Plant key={101} position={[0, -1, 1]} scale={[0.002, 0.002, 0.002]} />
-      <Flower key={102} position={[0.25, -1, 1]} scale={[0.05, 0.05, 0.05]} />
-      <Tomato key={103} position={[2, -1, 1]} scale={[1.5, 1.5, 1.5]} />
-      {positions2.map((position, index) => (
+      {plantPositions.map((position, index) => (
+        <Plant key={index} position={position} scale={[0.002, 0.002, 0.002]} />
+      ))}
+      {flowerPositions.map((position, index) => (
+        <Flower key={index} position={position} scale={[0.03, 0.03, 0.03]} />
+      ))}
+      {cornPositions.map((position, index) => (
         <Corn key={index} position={position} scale={[1, 1, 1]} />
       ))}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
@@ -45,10 +64,12 @@ function Desert() {
   );
 }
 
-export default function DesertScene() {
+export const DesertScene: React.FC<DesertSceneProps> = ({
+  data
+}) => {
   return (
     <Canvas style={{ width: "100%", height: "100vh" }}>
-        <MyCamera />
+      <MyCamera />
       <OrbitControls />
       <Sky
         sunPosition={[0, 0.08, -0.15]}
@@ -57,7 +78,7 @@ export default function DesertScene() {
         mieCoefficient={0.0005}
         mieDirectionalG={0.9}
       />
-      <Desert />
+      <Desert data={data} />
     </Canvas>
   );
 }

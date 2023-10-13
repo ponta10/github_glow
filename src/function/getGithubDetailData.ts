@@ -13,8 +13,8 @@ export async function getGithubDetailData(
                   email
                   avatarUrl
                   contributionsCollection(from: $from, to: $to) {
-                      totalRepositoryContributions
-                      contributionCalendar {
+                    totalRepositoryContributions
+                    contributionCalendar {
                         weeks {
                             contributionDays {
                                 date
@@ -22,11 +22,11 @@ export async function getGithubDetailData(
                             }
                         }
                     }
-                      totalCommitContributions
-                      totalPullRequestContributions
-                      totalIssueContributions
-                      totalPullRequestReviewContributions
-                      repositoryContributions(first: 100) {
+                    totalCommitContributions
+                    totalPullRequestContributions
+                    totalIssueContributions
+                    totalPullRequestReviewContributions
+                    repositoryContributions(first: 100) {
                           nodes {
                               repository {
                                   name
