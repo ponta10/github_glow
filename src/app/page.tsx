@@ -8,7 +8,7 @@ import logo from "../../public/logo.png";
 import field from "../../public/field.jpg";
 import WatchDataButton from "@/components/Button/WatchData";
 import SignOutButton from "@/components/Button/SIgnOut";
-import { DesertScene } from "@/components/3d/ThreeScene";
+import { DesertScene } from "@/components/3d/DesertScreen";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
