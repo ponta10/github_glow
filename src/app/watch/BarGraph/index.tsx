@@ -3,29 +3,20 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
 interface DataEntry {
-  month: number;
+  month: string;
   value: number;
 }
 
-const data: DataEntry[] = [
-  { month: 1, value: 40 },
-  { month: 2, value: 53 },
-  { month: 3, value: 20 },
-  { month: 4, value: 25 },
-  { month: 5, value: 50 },
-  { month: 6, value: 15 },
-  { month: 7, value: 30 },
-  { month: 8, value: 40 },
-  { month: 9, value: 45 },
-  { month: 10, value: 35 },
-  { month: 11, value: 80 },
-  { month: 12, value: 30 }
-];
+interface BarGraphProps {
+    data: DataEntry[];
+}
 
-export const BarGraph: React.FC = () => {
+const BarGraph: React.FC<BarGraphProps> = ({
+    data
+}) => {
   return (
     <BarChart
-      width={600}
+      width={660}
       height={400}
       data={data}
       margin={{
@@ -40,3 +31,6 @@ export const BarGraph: React.FC = () => {
     </BarChart>
   );
 }
+
+
+export default BarGraph;

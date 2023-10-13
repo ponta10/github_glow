@@ -1,17 +1,37 @@
 import React from "react";
-import { PieGraph } from "./PieGraph";
-import { activeData, langData } from "@/utils/const";
-import { BarGraph } from "./BarGraph";
-import WatchDataButton from "@/components/Button/WatchData";
 import SignOutButton from "@/components/Button/SIgnOut";
 import Image from "next/image";
 import logo from "../../../public/logo.png";
 import WatchFieldButton from "@/components/Button/WatchField";
+import dynamic from "next/dynamic";
+import { getGithubDetailData } from "@/function/getGithubDetailData";
+import { getServerSession } from "next-auth";
+import { nextAuthOptions } from "@/libs/next-auth/options";
+import { GraphContainer } from "./GraphContainer";
+const PieGraph = dynamic(() => import("./PieGraph"), {
+  ssr: false,
+});
 
-const watch = () => {
+const BarGraph = dynamic(() => import("./BarGraph"), {
+  ssr: false,
+});
+
+const watch = async () => {
+  const session = await getServerSession(nextAuthOptions);
+  if (!session) {
+    return <p>未認証</p>;
+  }
+  const githubData = await getGithubDetailData(
+    session?.accessToken ?? "",
+    "2022-09-01T00:00:00",
+    "2023-08-31T00:00:00"
+  );
+
+  console.log(githubData);
+
   return (
     <>
-      {/* <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
+      <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
         <Image
           width={180}
           height={80}
@@ -24,21 +44,21 @@ const watch = () => {
           <WatchFieldButton />
           <SignOutButton />
         </div>
-      </header> */}
-      <div className="flex items-center justify-around">
-        <div className="bg-white shadow-lg rounded-md p-10">
-          <p className="font-bold">月別コントリビュート</p>
-          <BarGraph />
-        </div>
+      </header>
+      <div
+        style={{ height: "calc(100vh - 160px)" }}
+        className="flex items-center justify-center gap-16 mt-28"
+      >
+        <GraphContainer text="月別コントリビュート">
+          <BarGraph data={githubData.monthlyContributions} />
+        </GraphContainer>
         <div className="flex flex-col gap-4">
-          <div className="bg-white shadow-lg rounded-md p-10">
-          <p className="font-bold">利用言語割合</p>
-            <PieGraph data={langData} />
-          </div>
-          <div className="bg-white shadow-lg rounded-md p-10">
-          <p className="font-bold">コントリビュート割合</p>
-            <PieGraph data={activeData} />
-          </div>
+          <GraphContainer text="言語割合">
+            <PieGraph data={githubData.repoLanguageData} />
+          </GraphContainer>
+          <GraphContainer text="コントリビュート割合">
+            <PieGraph data={githubData.activeData} />
+          </GraphContainer>
         </div>
       </div>
     </>

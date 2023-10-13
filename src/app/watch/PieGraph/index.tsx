@@ -1,25 +1,25 @@
 "use client"
 import { DataEntry } from '@/utils/const';
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface PieGraphProps {
     data: DataEntry[];
 }
 
-export const PieGraph: React.FC<PieGraphProps> = ({
+const PieGraph: React.FC<PieGraphProps> = ({
     data
 }) => {
   return (
-    <PieChart width={400} height={400}>
+    <PieChart width={440} height={240}>
       <Pie
         data={data}
-        cx={200}
-        cy={200}
+        cx={220}
+        cy={120}
         labelLine={false}
         outerRadius={80}
         dataKey="value"
-        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+        label={({ name, percent }) => (percent * 100 > 3 ? `${name} ${(percent * 100).toFixed(0)}%` : '')}
       >
         {
           data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)
@@ -29,3 +29,5 @@ export const PieGraph: React.FC<PieGraphProps> = ({
     </PieChart>
   );
 }
+
+export default PieGraph;
