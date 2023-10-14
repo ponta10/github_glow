@@ -8,7 +8,7 @@ interface DesertSceneProps {
 }
 
 export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
-  const sandTexture = useTexture("/desert2.jpeg");
+  const sandTexture = useTexture("/desert.jpeg");
   const gridSize = Math.ceil(Math.sqrt(data));
   const cellSize = 20 / gridSize;
   const offset = -10 + cellSize / 2;
@@ -23,7 +23,7 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
   }
   const scaleObj: ScaleObject = {
     cactus: [6, 6, 6],
-    plant: [0.002, 0.002, 0.002],
+    plant: [0.0025, 0.0025, 0.0025],
     grass: [0.0003, 0.0003, 0.0003],
     flower: [0.03, 0.03, 0.03],
     corn: [0.8, 0.8, 0.8],
@@ -65,7 +65,7 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
         scale = scaleObj.plant;
       }
     } else {
-      const threshold = (data - 3999) / (5000 - 3999);
+      const threshold = (data - 3999) / (10000 - 3999);
       if (positionRatio < threshold) {
         component = Corn;
         scale = scaleObj.corn;

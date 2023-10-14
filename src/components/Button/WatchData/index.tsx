@@ -7,7 +7,6 @@ export default function WatchDataButton() {
   return (
     <Button
       text="データを見る"
-      fontSize="lg"
       onClick={() => router.push("/watch")}
     />
   );

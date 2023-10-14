@@ -7,7 +7,6 @@ export default function WatchFieldButton() {
   return (
     <Button
       text="畑を見る"
-      fontSize="lg"
       onClick={() => router.push("/")}
     />
   );

@@ -4,6 +4,6 @@ import { Button } from "..";
 
 export default function SignOutButton() {
   return (
-    <Button text="SignOut" bgcolor="bg-base" fontSize="lg" onClick={() => signOut()} />
+    <Button text="SignOut" bgcolor="bg-base" onClick={() => signOut()} />
   );
 }
