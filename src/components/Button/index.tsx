@@ -1,26 +1,26 @@
-import React from 'react'
+import React from "react";
 
 export interface ButtonProps {
-  bgcolor?: string
-  textcolor?: string
-  text?: string
-  width?: string | number
-  fontSize?: string
-  type?: 'button' | 'submit' | 'reset'
-  disabled?: boolean
-  onClick?: () => void
+  bgcolor?: string;
+  textcolor?: string;
+  text?: string;
+  width?: string | number;
+  fontSize?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   text,
-  bgcolor = 'bg-blue-500',
-  textcolor = 'text-white',
-  width = 'auto',
-  fontSize = 'md',
+  bgcolor = "bg-blue-500",
+  textcolor = "text-white",
+  width = "auto",
+  fontSize = "md",
   ...props
 }) => {
-  const widthClass = typeof width === 'number' ? `w-${width}` : width
-  const fontSizeClass = `text-${fontSize}`
+  const widthClass = typeof width === "number" ? `w-${width}` : width;
+  const fontSizeClass = `text-${fontSize}`;
 
   return (
     <button
@@ -45,5 +45,5 @@ export const Button: React.FC<ButtonProps> = ({
     >
       {text}
     </button>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import React, { ReactNode, useEffect } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
+import React, { ReactNode, useEffect } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface ModalProps {
   open: boolean;
@@ -16,13 +16,13 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [open]);
 
@@ -35,10 +35,19 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div
         className="relative bg-white p-10 rounded-lg shadow-lg transition-transform transform duration-500 ease-out"
-        style={{ width: `${width}px`, transform: open ? 'translateY(0) scale(1)' : 'translateY(20%) scale(0.95)', opacity: open ? 1 : 0 }}
+        style={{
+          width: `${width}px`,
+          transform: open
+            ? "translateY(0) scale(1)"
+            : "translateY(20%) scale(0.95)",
+          opacity: open ? 1 : 0,
+        }}
         onClick={(e) => e.stopPropagation()}
       >
-        <AiOutlineClose className="absolute top-4 right-4 cursor-pointer" onClick={onClose} />
+        <AiOutlineClose
+          className="absolute top-4 right-4 cursor-pointer"
+          onClick={onClose}
+        />
         {children}
       </div>
     </div>

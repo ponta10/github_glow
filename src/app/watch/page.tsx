@@ -26,7 +26,7 @@ const watch = async () => {
   const githubData = await getGithubDetailData(
     session?.accessToken ?? "",
     oneYearAgo,
-    today
+    today,
   );
 
   return (

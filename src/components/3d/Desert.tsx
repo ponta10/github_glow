@@ -13,7 +13,7 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
   const cellSize = 20 / gridSize;
   const offset = -10 + cellSize / 2;
 
-  const positions = [];
+  const positions: [number, number, number][] = [];
   for (let i = 0; i < gridSize; i++) {
     for (let j = 0; j < gridSize; j++) {
       const x = offset + i * cellSize;
@@ -21,6 +21,7 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
       positions.push([x, -0.8, z]);
     }
   }
+
   const scaleObj: ScaleObject = {
     cactus: [6, 6, 6],
     plant: [0.0025, 0.0025, 0.0025],
@@ -30,13 +31,17 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
   };
 
   const selectPlantComponent = (index: number) => {
-    let component, scale;
+    let component, scale: [number, number, number];
     const positionRatio = index / (gridSize * gridSize);
 
     if (data <= 299) {
       component = Cactus;
       const growthFactor = data / 299;
-      scale = scaleObj.cactus.map((dim) => dim * growthFactor);
+      scale = scaleObj.cactus.map((dim) => dim * growthFactor) as [
+        number,
+        number,
+        number,
+      ];
     } else if (data <= 999) {
       const threshold = (data - 299) / (999 - 299);
       if (positionRatio < threshold) {

@@ -15,9 +15,7 @@ const MyCamera = () => {
   return null;
 };
 
-export const DesertScene: React.FC<DesertSceneProps> = ({
-  data
-}) => {
+export const DesertScene: React.FC<DesertSceneProps> = ({ data }) => {
   return (
     <Canvas style={{ width: "100%", height: "100vh" }}>
       <MyCamera />
@@ -32,4 +30,4 @@ export const DesertScene: React.FC<DesertSceneProps> = ({
       <Desert data={data} />
     </Canvas>
   );
-}
+};

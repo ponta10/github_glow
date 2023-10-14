@@ -8,13 +8,22 @@ declare module "next-auth" {
     user: DefaultSession;
     error?: string;
   }
+  interface JWT {
+    accessToken?: string;
+    githubName?: string;
+  }
 }
 
-declare module 'three/examples/jsm/loaders/GLTFLoader' {
-  import { LoadingManager, Group } from 'three';
+declare module "three/examples/jsm/loaders/GLTFLoader" {
+  import { LoadingManager, Group } from "three";
   export class GLTFLoader {
     constructor(loadingManager?: LoadingManager);
-    load(url: string, onLoad: (gltf: GLTF) => void, onProgress?: (event: ProgressEvent) => void, onError?: (event: ErrorEvent) => void): void;
+    load(
+      url: string,
+      onLoad: (gltf: GLTF) => void,
+      onProgress?: (event: ProgressEvent) => void,
+      onError?: (event: ErrorEvent) => void,
+    ): void;
   }
 
   export interface GLTF {

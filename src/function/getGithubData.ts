@@ -1,7 +1,7 @@
 export async function getGithubData(
   accessToken: string,
   fromDate: string,
-  toDate: string
+  toDate: string,
 ) {
   const query = `
         query($from: DateTime!, $to: DateTime!) {
@@ -47,7 +47,8 @@ export async function getGithubData(
         email: user.email,
         avatarUrl: user.avatarUrl,
       },
-      total: user.contributionsCollection.contributionCalendar.totalContributions,
+      total:
+        user.contributionsCollection.contributionCalendar.totalContributions,
     };
   } catch (error) {
     console.error("Error fetching data: ", error);

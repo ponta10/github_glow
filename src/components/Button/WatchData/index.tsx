@@ -4,10 +4,5 @@ import { Button } from "..";
 
 export default function WatchDataButton() {
   const router = useRouter();
-  return (
-    <Button
-      text="データを見る"
-      onClick={() => router.push("/watch")}
-    />
-  );
+  return <Button text="データを見る" onClick={() => router.push("/watch")} />;
 }

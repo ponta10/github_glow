@@ -33,7 +33,7 @@ interface RepositoryContribution {
 export async function getGithubDetailData(
   accessToken: string,
   fromDate: string,
-  toDate: string
+  toDate: string,
 ) {
   const query = `
           query($from: DateTime!, $to: DateTime!) {
@@ -110,7 +110,7 @@ export async function getGithubDetailData(
             const langName = langEdge.node.name;
             languageSizes[langName] =
               (languageSizes[langName] || 0) + langEdge.size;
-          }
+          },
         );
     });
 

@@ -42,10 +42,11 @@ export default async function Home() {
   const githubData = await getGithubData(
     session?.accessToken ?? "",
     oneYearAgo,
-    today
+    today,
   );
   const thresholds = [300, 1000, 2000, 4000, Infinity];
-  const rankLogo = ranks[thresholds.findIndex(threshold => githubData.total < threshold)];
+  const rankLogo =
+    ranks[thresholds.findIndex((threshold) => githubData.total < threshold)];
 
   return (
     <>
@@ -53,7 +54,13 @@ export default async function Home() {
         <Image width={180} height={80} alt="logo" src={logo} priority />
         <div className="flex gap-4 items-center">
           <Click>
-          <Image width={rankLogo.size} height={80} alt="logo" src={rankLogo.image} priority />
+            <Image
+              width={rankLogo.size}
+              height={80}
+              alt="logo"
+              src={rankLogo.image}
+              priority
+            />
           </Click>
           <p className="text-lg font-semibold">
             {githubData.total}

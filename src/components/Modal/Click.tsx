@@ -16,8 +16,8 @@ export const Click: React.FC<ClickProps> = ({ children }) => {
         {children}
       </div>
       <Modal open={open} onClose={() => setOpen(false)}>
-        {ranks.map((rank) => (
-          <div className="flex items-center gap-8">
+        {ranks.map((rank, index) => (
+          <div key={index} className="flex items-center gap-8">
             <Image
               width={rank.size}
               height={60}
@@ -25,7 +25,10 @@ export const Click: React.FC<ClickProps> = ({ children }) => {
               src={rank.image}
               priority
             />
-            <p className="text-lg font-semibold">{rank.range}<span className="text-sm font-medium ml-2">contributes</span></p>
+            <p className="text-lg font-semibold">
+              {rank.range}
+              <span className="text-sm font-medium ml-2">contributes</span>
+            </p>
           </div>
         ))}
       </Modal>
