@@ -35,3 +35,13 @@ export const langColorData: DataEntry[] = [
     { name: 'HTML', color: '#e34c26' },
     { name: 'CSS', color: '#264de4' },
 ];
+
+type ScaleArray = [number, number, number];
+
+export interface ScaleObject {
+  cactus: ScaleArray;
+  plant: ScaleArray;
+  grass: ScaleArray;
+  flower: ScaleArray;
+  corn: ScaleArray;
+};

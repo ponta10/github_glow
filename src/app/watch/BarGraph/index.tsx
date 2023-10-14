@@ -20,7 +20,7 @@ const BarGraph: React.FC<BarGraphProps> = ({
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="month" />
+      <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
       <Bar dataKey="value" fill="#40B93C" />
