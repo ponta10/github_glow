@@ -5,7 +5,7 @@ import { Button } from "..";
 export default function SignInButton() {
   return (
     <Button
-      text="SignIn"
+      text="SignIn With GitHub"
       bgcolor="bg-base"
       fontSize="lg"
       onClick={() => signIn()}

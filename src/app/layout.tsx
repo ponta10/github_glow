@@ -10,6 +10,7 @@ export const metadata = {
   openGraph: {
     title: "GitHubGrow",
     description: "あなたのGitHubに応じて畑が育つ",
+    url: "https://github-glow.vercel.app/",
     siteName: "GitHubGrow",
     images: [
       {
@@ -20,6 +21,12 @@ export const metadata = {
     ],
     locale: "ja_JP",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@site",
+    creator: "@creator",
+    images: "https://github-glow.vercel.app/githubGrow.png",
   },
 };
 
