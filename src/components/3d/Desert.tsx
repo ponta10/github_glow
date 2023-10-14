@@ -1,4 +1,4 @@
-"use client";
+import React from 'react';
 import { useTexture } from "@react-three/drei";
 import { Cactus, Corn, Flower, Plant } from "./Plant";
 
@@ -6,47 +6,69 @@ interface DesertSceneProps {
   data: number;
 }
 
-export const Desert: React.FC<DesertSceneProps> = ({
-  data
-}) => {
+export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
   const sandTexture = useTexture("/desert2.jpeg");
-  const numCacti = data;
-  const positions = Array.from({ length: numCacti }, () => [
-    (Math.random() - 0.5) * 20,
-    -0.8,
-    (Math.random() - 0.5) * 20,
-  ]);
-  const plantPositions = Array.from({ length: numCacti - 500 }, () => [
-    (Math.random() - 0.5) * 20,
-    -0.8,
-    (Math.random() - 0.5) * 20,
-  ]);
-  const flowerPositions = Array.from({ length: numCacti - 1000 }, () => [
-    (Math.random() - 0.5) * 20,
-    -0.8,
-    (Math.random() - 0.5) * 20,
-  ]);
-  const cornPositions = Array.from({ length: numCacti - 5000 }, () => [
-    (Math.random() - 0.5) * 20,
-    -0.8,
-    (Math.random() - 0.5) * 20,
-  ]);
+  data = 1600;
+  const gridSize = Math.ceil(Math.sqrt(data));
+  const cellSize = 20 / gridSize;
+  const offset = -10 + cellSize / 2;
+
+  const positions = [];
+  for (let i = 0; i < gridSize; i++) {
+    for (let j = 0; j < gridSize; j++) {
+      const x = offset + i * cellSize;
+      const z = offset + j * cellSize;
+      positions.push([x, -0.8, z]);
+    }
+  }
+
+  const selectPlantComponent = (index: number) => {
+    let component, scale;
+    if (data <= 500) {
+      component = Cactus;
+      scale = [6, 6, 6];
+    } else if (data <= 1000) {
+      const threshold = (data - 500) / 500;
+      if (index / (gridSize * gridSize) < threshold) {
+        component = Plant;
+        scale = [0.002, 0.002, 0.002];
+      } else {
+        component = Cactus;
+        scale = [6, 6, 6];
+      }
+    } else if (data <= 1500) {
+      const threshold = (data - 1000) / 500;
+      if (index / (gridSize * gridSize) < threshold) {
+        component = Flower;
+        scale = [0.03, 0.03, 0.03];
+      } else {
+        component = Plant;
+        scale = [0.002, 0.002, 0.002];
+      }
+    } else if (data <= 2000) {  // Update this condition to check for data <= 2000
+        const threshold = (data - 1500) / 500;
+        if (index / (gridSize * gridSize) < threshold) {
+          component = Corn;
+          scale = [1, 1, 1];
+        } else {
+          component = Flower;
+          scale = [0.03, 0.03, 0.03];
+        }
+      } else {
+        component = Corn;
+        scale = [1, 1, 1];
+      }
+    return { component, scale };
+  };
+
   return (
     <>
       <ambientLight intensity={2} />
       <directionalLight position={[0, 5, 5]} intensity={3} color={"#FDB86D"} />
-      {positions.map((position, index) => (
-        <Cactus key={index} position={position} scale={[6, 6, 6]} />
-      ))}
-      {plantPositions.map((position, index) => (
-        <Plant key={index} position={position} scale={[0.002, 0.002, 0.002]} />
-      ))}
-      {flowerPositions.map((position, index) => (
-        <Flower key={index} position={position} scale={[0.03, 0.03, 0.03]} />
-      ))}
-      {cornPositions.map((position, index) => (
-        <Corn key={index} position={position} scale={[1, 1, 1]} />
-      ))}
+      {positions.map((position, index) => {
+        const { component: PlantComponent, scale } = selectPlantComponent(index);
+        return <PlantComponent key={index} position={position} scale={scale} />
+      })}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <planeGeometry args={[20, 20, 100, 100]} />
         <meshStandardMaterial map={sandTexture} />
