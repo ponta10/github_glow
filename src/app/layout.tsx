@@ -21,11 +21,6 @@ export const metadata = {
     locale: "ja_JP",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    site: "@site",
-    creator: "@creator",
-  },
 };
 
 export default function RootLayout({

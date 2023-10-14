@@ -8,6 +8,7 @@ interface MyToken extends JWT {
 }
 
 export const nextAuthOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   debug: true,
   providers: [
     GithubProvider({
