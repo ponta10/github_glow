@@ -1,3 +1,9 @@
+import catus from "../../public/catus.png";
+import grass from "../../public/grass.png";
+import plant from "../../public/plant.png";
+import flower from "../../public/flower.png";
+import corn from "../../public/corn.png";
+
 export interface DataEntry {
     name: string;
     color?: string;
@@ -45,3 +51,18 @@ export interface ScaleObject {
   flower: ScaleArray;
   corn: ScaleArray;
 };
+
+interface rankData {
+    name: string;
+    size: number;
+    image: any;
+    range: string;
+}
+
+export const ranks: rankData[] = [
+    { name: 'cactus', size: 64, image: catus, range: '0~299' },
+    { name: 'grass', size: 64, image: grass, range: '300~999' },
+    { name: 'plant', size: 64, image: plant, range: '1000~1999' },
+    { name: 'flower', size: 64, image: flower, range: '2000~3999'},
+    { name: 'corn', size: 64, image: corn, range: '4000~'},
+]
