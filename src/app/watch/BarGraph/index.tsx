@@ -1,14 +1,10 @@
 "use client"
+import { GraphData } from '@/utils/const';
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 
-interface DataEntry {
-  month: string;
-  value: number;
-}
-
 interface BarGraphProps {
-    data: DataEntry[];
+    data: GraphData[];
 }
 
 const BarGraph: React.FC<BarGraphProps> = ({

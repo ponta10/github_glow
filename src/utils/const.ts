@@ -1,19 +1,17 @@
 export interface DataEntry {
     name: string;
-    value?: number;
     color?: string;
 }
-  
-export const langData: DataEntry[] = [
-    { name: 'TypeScript', color: '#0088FE' },
-    { name: 'PHP', color: '#00C49F' },
-];
+
+export interface GraphData extends DataEntry {
+    value: number;
+}
 
 export const activeColorData: DataEntry[] = [
-    { name: 'commit', value: 50, color: '#0088FE' },
-    { name: 'review', value: 30, color: '#00C49F' },
-    { name: 'pull request', value: 30, color: '#FFBB28' },
-    { name: 'issue', value: 30, color: '#FF8042' },
+    { name: 'commit', color: '#0088FE' },
+    { name: 'review', color: '#00C49F' },
+    { name: 'pull request', color: '#FFBB28' },
+    { name: 'issue', color: '#FF8042' },
 ]
 
 export const langColorData: DataEntry[] = [

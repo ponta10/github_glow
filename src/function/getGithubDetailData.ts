@@ -1,5 +1,35 @@
 import { activeColorData, langColorData } from "@/utils/const";
 
+interface ContributionDay {
+  date: string;
+  contributionCount: number;
+}
+
+interface Week {
+  contributionDays: ContributionDay[];
+}
+
+interface LanguageNode {
+  name: string;
+}
+
+interface LanguageEdge {
+  size: number;
+  node: LanguageNode;
+}
+
+interface Languages {
+  edges: LanguageEdge[];
+}
+
+interface Repository {
+  languages: Languages;
+}
+
+interface RepositoryContribution {
+  repository: Repository;
+}
+
 export async function getGithubDetailData(
   accessToken: string,
   fromDate: string,
@@ -73,13 +103,15 @@ export async function getGithubDetailData(
       data.data.viewer.contributionsCollection.repositoryContributions.nodes;
 
     const languageSizes: { [key: string]: number } = {};
-    repoContributions.forEach((contribution: any) => {
+    repoContributions.forEach((contribution: RepositoryContribution) => {
       contribution &&
-        contribution.repository.languages.edges.forEach((langEdge: any) => {
-          const langName = langEdge.node.name;
-          languageSizes[langName] =
-            (languageSizes[langName] || 0) + langEdge.size;
-        });
+        contribution.repository.languages.edges.forEach(
+          (langEdge: LanguageEdge) => {
+            const langName = langEdge.node.name;
+            languageSizes[langName] =
+              (languageSizes[langName] || 0) + langEdge.size;
+          }
+        );
     });
 
     const langData = Object.keys(languageSizes).map((key) => ({
@@ -90,18 +122,18 @@ export async function getGithubDetailData(
 
     const weeksData =
       data.data?.viewer.contributionsCollection.contributionCalendar.weeks;
-    const monthlyData: { month: string; value: number }[] = [];
+    const monthlyData: { name: string; value: number }[] = [];
     const monthlyCounts: { [key: string]: number } = {};
-    weeksData.forEach((week: any) => {
-      week.contributionDays.forEach((day: any) => {
-        const month = day.date.slice(0, 7); // 日付の年-月部分を抽出
+    weeksData.forEach((week: Week) => {
+      week.contributionDays.forEach((day: ContributionDay) => {
+        const month = day.date.slice(0, 7);
         monthlyCounts[month] =
           (monthlyCounts[month] || 0) + day.contributionCount;
       });
     });
 
     Object.keys(monthlyCounts).forEach((key) => {
-      monthlyData.push({ month: key.slice(-2), value: monthlyCounts[key] });
+      monthlyData.push({ name: key.slice(-2), value: monthlyCounts[key] });
     });
 
     const activeData = [

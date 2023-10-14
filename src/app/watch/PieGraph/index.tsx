@@ -1,19 +1,20 @@
 "use client"
-import { DataEntry } from '@/utils/const';
+import { GraphData } from '@/utils/const';
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface PieGraphProps {
-    data: DataEntry[];
+    data: GraphData[];
 }
 
 const PieGraph: React.FC<PieGraphProps> = ({
     data
 }) => {
+    const sortedData = [...data].sort((a, b) => b.value - a.value);
   return (
     <PieChart width={440} height={240}>
       <Pie
-        data={data}
+        data={sortedData}
         cx={220}
         cy={120}
         labelLine={false}
@@ -22,7 +23,7 @@ const PieGraph: React.FC<PieGraphProps> = ({
         label={({ name, percent }) => (percent * 100 > 3 ? `${name} ${(percent * 100).toFixed(0)}%` : '')}
       >
         {
-          data.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)
+          sortedData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)
         }
       </Pie>
       <Tooltip />
