@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 import { useTexture } from "@react-three/drei";
-import { Cactus, Corn, Flower, Plant } from "./Plant";
+import { Cactus, Corn, Flower, Grass, Plant } from "./Plant";
+import { ScaleObject } from "@/utils/const";
 
 interface DesertSceneProps {
   data: number;
@@ -20,43 +21,59 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
       positions.push([x, -0.8, z]);
     }
   }
+  const scaleObj: ScaleObject = {
+    cactus: [6, 6, 6],
+    plant: [0.002, 0.002, 0.002],
+    grass: [0.0003, 0.0003, 0.0003],
+    flower: [0.03, 0.03, 0.03],
+    corn: [0.8, 0.8, 0.8],
+  };
 
   const selectPlantComponent = (index: number) => {
     let component, scale;
-    if (data <= 500) {
+    const positionRatio = index / (gridSize * gridSize);
+
+    if (data <= 299) {
       component = Cactus;
-      scale = [6, 6, 6];
-    } else if (data <= 1000) {
-      const threshold = (data - 500) / 500;
-      if (index / (gridSize * gridSize) < threshold) {
-        component = Plant;
-        scale = [0.002, 0.002, 0.002];
+      const growthFactor = data / 299;
+      scale = scaleObj.cactus.map((dim) => dim * growthFactor);
+    } else if (data <= 999) {
+      const threshold = (data - 299) / (999 - 299);
+      if (positionRatio < threshold) {
+        component = Grass;
+        scale = scaleObj.grass;
       } else {
         component = Cactus;
-        scale = [6, 6, 6];
+        scale = scaleObj.cactus;
       }
-    } else if (data <= 1500) {
-      const threshold = (data - 1000) / 500;
-      if (index / (gridSize * gridSize) < threshold) {
+    } else if (data <= 1999) {
+      const threshold = (data - 999) / (1999 - 999);
+      if (positionRatio < threshold) {
+        component = Plant;
+        scale = scaleObj.plant;
+      } else {
+        component = Grass;
+        scale = scaleObj.grass;
+      }
+    } else if (data <= 3999) {
+      const threshold = (data - 1999) / (3999 - 1999);
+      if (positionRatio < threshold) {
         component = Flower;
-        scale = [0.03, 0.03, 0.03];
+        scale = scaleObj.flower;
       } else {
         component = Plant;
-        scale = [0.002, 0.002, 0.002];
+        scale = scaleObj.plant;
       }
-    } else if (data <= 2000) {
-        const threshold = (data - 1500) / 500;
-        if (index / (gridSize * gridSize) < threshold) {
-          component = Corn;
-          scale = [1, 1, 1];
-        } else {
-          component = Flower;
-          scale = [0.03, 0.03, 0.03];
-        }
-      } else {
+    } else {
+      const threshold = (data - 3999) / (5000 - 3999);
+      if (positionRatio < threshold) {
         component = Corn;
-        scale = [1, 1, 1];
+        scale = scaleObj.corn;
+      } else {
+        component = Flower;
+        scale = scaleObj.flower;
       }
+    }
     return { component, scale };
   };
 
@@ -65,8 +82,9 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
       <ambientLight intensity={2} />
       <directionalLight position={[0, 5, 5]} intensity={3} color={"#FDB86D"} />
       {positions.map((position, index) => {
-        const { component: PlantComponent, scale } = selectPlantComponent(index);
-        return <PlantComponent key={index} position={position} scale={scale} />
+        const { component: PlantComponent, scale } =
+          selectPlantComponent(index);
+        return <PlantComponent key={index} position={position} scale={scale} />;
       })}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
         <planeGeometry args={[20, 20, 100, 100]} />
@@ -74,4 +92,4 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
       </mesh>
     </>
   );
-}
+};
