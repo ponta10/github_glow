@@ -9,6 +9,7 @@ import field from "../../public/field.jpg";
 import WatchDataButton from "@/components/Button/WatchData";
 import SignOutButton from "@/components/Button/SIgnOut";
 import { DesertScene } from "@/components/3d/DesertScreen";
+import { getDate } from "@/function/getDate";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -34,16 +35,18 @@ export default async function Home() {
     );
   }
 
+  const { today, oneYearAgo } = getDate()
+
   const githubData = await getGithubData(
     session?.accessToken ?? "",
-    "2022-09-01T00:00:00",
-    "2023-08-31T00:00:00"
+    oneYearAgo,
+    today
   );
 
   return (
     <>
     <header className="fixed top-0 left-0 z-10 w-screen h-24 bg-white shadow-md flex items-center justify-between px-10">
-      <Image width={180} height={80} alt="logo" src={logo} priority style={{ width: "auto" }} />
+      <Image width={180} height={80} alt="logo" src={logo} priority />
       <div className="flex gap-4">
         <WatchDataButton />
         <SignOutButton />

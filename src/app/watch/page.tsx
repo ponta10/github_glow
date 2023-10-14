@@ -8,6 +8,7 @@ import { getGithubDetailData } from "@/function/getGithubDetailData";
 import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/libs/next-auth/options";
 import { GraphContainer } from "./GraphContainer";
+import { getDate } from "@/function/getDate";
 const PieGraph = dynamic(() => import("./PieGraph"), {
   ssr: false,
 });
@@ -21,13 +22,12 @@ const watch = async () => {
   if (!session) {
     return <p>未認証</p>;
   }
+  const { today, oneYearAgo } = getDate();
   const githubData = await getGithubDetailData(
     session?.accessToken ?? "",
-    "2022-09-01T00:00:00",
-    "2023-08-31T00:00:00"
+    oneYearAgo,
+    today
   );
-
-  console.log(githubData);
 
   return (
     <>

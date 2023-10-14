@@ -9,7 +9,7 @@ interface DesertSceneProps {
 
 const MyCamera = () => {
   const { camera } = useThree();
-  camera.position.z = 12;
+  camera.position.z = 16;
   camera.position.y = 2;
   camera.lookAt(0, 0, 0);
   return null;

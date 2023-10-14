@@ -8,7 +8,6 @@ interface DesertSceneProps {
 
 export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
   const sandTexture = useTexture("/desert2.jpeg");
-  data = 1600;
   const gridSize = Math.ceil(Math.sqrt(data));
   const cellSize = 20 / gridSize;
   const offset = -10 + cellSize / 2;
@@ -45,7 +44,7 @@ export const Desert: React.FC<DesertSceneProps> = ({ data }) => {
         component = Plant;
         scale = [0.002, 0.002, 0.002];
       }
-    } else if (data <= 2000) {  // Update this condition to check for data <= 2000
+    } else if (data <= 2000) {
         const threshold = (data - 1500) / 500;
         if (index / (gridSize * gridSize) < threshold) {
           component = Corn;
