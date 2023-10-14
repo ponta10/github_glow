@@ -13,6 +13,12 @@ export function Plant({ position, scale }: any) {
   return <primitive object={scene} position={position} scale={scale} />;
 }
 
+export function Grass({ position, scale }: any) {
+  const gltf = useGLTF("/grass.glb");
+  const scene = useMemo(() => gltf.scene.clone(), [gltf]);
+  return <primitive object={scene} position={position} scale={scale} />;
+}
+
 export function Flower({ position, scale }: any) {
   const gltf = useGLTF("/snapdragon.glb");
   const scene = useMemo(() => gltf.scene.clone(), [gltf]);
