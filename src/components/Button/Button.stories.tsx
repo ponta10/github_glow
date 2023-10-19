@@ -1,41 +1,41 @@
-import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from '.'
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from ".";
 
 const meta: Meta = {
-  title: 'Example/Button',
+  title: "Example/Button",
   component: Button,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
   argTypes: {
-    bgcolor: { control: 'text' },
-    textcolor: { control: 'text' },
-    text: { control: 'text' },
-    width: { control: 'text' },
-    fontSize: { control: 'text' },
+    bgcolor: { control: "text" },
+    textcolor: { control: "text" },
+    text: { control: "text" },
+    width: { control: "text" },
+    fontSize: { control: "text" },
     type: {
-      control: { type: 'select', options: ['button', 'submit', 'reset'] },
+      control: { type: "select", options: ["button", "submit", "reset"] },
     },
-    disabled: { control: 'boolean' },
-    onClick: { action: 'clicked' },
+    disabled: { control: "boolean" },
+    onClick: { action: "clicked" },
   },
-}
+};
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    text: 'Default Button',
+    text: "Default Button",
   },
-}
+};
 
 export const SearchButton: Story = {
   args: {
-    text: '検索',
-    bgcolor: 'bg-base',
-    textcolor: 'text-white',
-    fontSize: '2xl',
+    text: "検索",
+    bgcolor: "bg-base",
+    textcolor: "text-white",
+    fontSize: "2xl",
   },
-}
+};
