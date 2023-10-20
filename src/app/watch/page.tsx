@@ -9,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "@/libs/next-auth/options";
 import { GraphContainer } from "./GraphContainer";
 import { getDate } from "@/function/getDate";
+import UnauthorizedPage from "../unauthorized";
 const PieGraph = dynamic(() => import("./PieGraph"), {
   ssr: false,
 });
@@ -20,7 +21,7 @@ const BarGraph = dynamic(() => import("./BarGraph"), {
 const watch = async () => {
   const session = await getServerSession(nextAuthOptions);
   if (!session) {
-    return <p>未認証</p>;
+    return <UnauthorizedPage />;
   }
   const { today, oneYearAgo } = getDate();
   const githubData = await getGithubDetailData(
