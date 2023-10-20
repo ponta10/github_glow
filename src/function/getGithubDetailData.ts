@@ -1,34 +1,7 @@
 import { activeColorData, langColorData } from "@/utils/const";
+import { getLanguageSizes, getMonthlyData } from "./dataProcessing/get";
 
-interface ContributionDay {
-  date: string;
-  contributionCount: number;
-}
-
-interface Week {
-  contributionDays: ContributionDay[];
-}
-
-interface LanguageNode {
-  name: string;
-}
-
-interface LanguageEdge {
-  size: number;
-  node: LanguageNode;
-}
-
-interface Languages {
-  edges: LanguageEdge[];
-}
-
-interface Repository {
-  languages: Languages;
-}
-
-interface RepositoryContribution {
-  repository: Repository;
-}
+const GITHUB_API_URL = "https://api.github.com/graphql";
 
 export async function getGithubDetailData(
   accessToken: string,
@@ -36,45 +9,45 @@ export async function getGithubDetailData(
   toDate: string,
 ) {
   const query = `
-          query($from: DateTime!, $to: DateTime!) {
-              viewer {
-                  login
-                  name
-                  email
-                  avatarUrl
-                  contributionsCollection(from: $from, to: $to) {
-                    totalRepositoryContributions
-                    contributionCalendar {
-                        weeks {
-                            contributionDays {
-                                date
-                                contributionCount
-                            }
-                        }
-                    }
-                    totalCommitContributions
-                    totalPullRequestContributions
-                    totalIssueContributions
-                    totalPullRequestReviewContributions
-                    repositoryContributions(first: 100) {
-                          nodes {
-                              repository {
-                                  name
-                                  languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
-                                      edges {
-                                          size
-                                          node {
-                                              name
-                                          }
-                                      }
-                                  }
-                              }
-                          }
+    query($from: DateTime!, $to: DateTime!) {
+        viewer {
+            login
+            name
+            email
+            avatarUrl
+            contributionsCollection(from: $from, to: $to) {
+              totalRepositoryContributions
+              contributionCalendar {
+                  weeks {
+                      contributionDays {
+                          date
+                          contributionCount
                       }
                   }
               }
-          }
-      `;
+              totalCommitContributions
+              totalPullRequestContributions
+              totalIssueContributions
+              totalPullRequestReviewContributions
+              repositoryContributions(first: 100) {
+                    nodes {
+                        repository {
+                            name
+                            languages(first: 5, orderBy: {field: SIZE, direction: DESC}) {
+                                edges {
+                                    size
+                                    node {
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
 
   const variables = {
     from: fromDate,
@@ -82,7 +55,7 @@ export async function getGithubDetailData(
   };
 
   try {
-    const response = await fetch("https://api.github.com/graphql", {
+    const response = await fetch(GITHUB_API_URL, {
       method: "POST",
       headers: {
         Authorization: `bearer ${accessToken}`,
@@ -93,27 +66,17 @@ export async function getGithubDetailData(
         variables: variables,
       }),
     });
+
     if (!response.ok) {
       throw new Error(`GitHub API request failed: ${response.statusText}`);
     }
+
     const data = await response.json();
     const user = data.data?.viewer;
-
     const repoContributions =
       data.data.viewer.contributionsCollection.repositoryContributions.nodes;
 
-    const languageSizes: { [key: string]: number } = {};
-    repoContributions.forEach((contribution: RepositoryContribution) => {
-      contribution &&
-        contribution.repository.languages.edges.forEach(
-          (langEdge: LanguageEdge) => {
-            const langName = langEdge.node.name;
-            languageSizes[langName] =
-              (languageSizes[langName] || 0) + langEdge.size;
-          },
-        );
-    });
-
+    const languageSizes = getLanguageSizes(repoContributions);
     const langData = Object.keys(languageSizes).map((key) => ({
       name: key,
       value: languageSizes[key],
@@ -122,19 +85,11 @@ export async function getGithubDetailData(
 
     const weeksData =
       data.data?.viewer.contributionsCollection.contributionCalendar.weeks;
-    const monthlyData: { name: string; value: number }[] = [];
-    const monthlyCounts: { [key: string]: number } = {};
-    weeksData.forEach((week: Week) => {
-      week.contributionDays.forEach((day: ContributionDay) => {
-        const month = day.date.slice(0, 7);
-        monthlyCounts[month] =
-          (monthlyCounts[month] || 0) + day.contributionCount;
-      });
-    });
-
-    Object.keys(monthlyCounts).forEach((key) => {
-      monthlyData.push({ name: key.slice(-2), value: monthlyCounts[key] });
-    });
+    const monthlyCounts = getMonthlyData(weeksData);
+    const monthlyData = Object.keys(monthlyCounts).map((key) => ({
+      name: key.slice(-2),
+      value: monthlyCounts[key],
+    }));
 
     const activeData = [
       {
