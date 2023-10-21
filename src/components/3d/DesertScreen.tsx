@@ -1,7 +1,7 @@
 "use client";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Sky } from "@react-three/drei";
-import { Desert } from "./Desert";
+import { Desert } from "./Desert/Desert";
 
 interface DesertSceneProps {
   data: number;
