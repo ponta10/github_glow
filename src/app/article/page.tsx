@@ -8,6 +8,7 @@ import logo from "../../../public/logo.png";
 import { Card } from "@/components/Card";
 import { getTrendingQuestions } from "@/function/articles/getOverflow";
 import WatchFieldButton from "@/components/Button/WatchField";
+import { Container } from "./Container";
 
 const article = async () => {
   const quiitaArticles = await fetchArticles();
@@ -25,44 +26,9 @@ const article = async () => {
         </div>
       </header>
       <div className="flex flex-row justify-around mt-24 p-4">
-        <div className="flex flex-col gap-8 items-center mb-8 w-1/3">
-          <h2 className="text-xl font-bold mb-4">Qiita</h2>
-          {quiitaArticles.map((article, index) => (
-            <Card
-              key={index}
-              title={article.title}
-              link={article.link}
-              image="/quiita.png"
-              date={article.pubDate}
-            />
-          ))}
-        </div>
-        <div className="flex flex-col gap-8 items-center mb-8 w-1/3">
-          <h2 className="text-xl font-bold mb-4">Zenn</h2>
-          {zennArticles.map((article, index) => (
-            <Card
-              key={index}
-              title={article.title}
-              link={article.link}
-              image={article.image}
-              date={article.pubDate}
-            />
-          ))}
-        </div>
-        <div className="flex flex-col gap-8 items-center mb-8 w-1/3">
-          <h2 className="text-xl font-bold mb-4">Stack Overflow</h2>
-          {overflows.map((overflow, index) => (
-            <Card
-              key={index}
-              title={overflow.title}
-              link={overflow.link}
-              image="/stackoverflow.jpeg"
-              date={new Date(
-                Number(overflow.pubDate) * 1000,
-              ).toLocaleDateString()}
-            />
-          ))}
-        </div>
+        <Container items={quiitaArticles} name="Qiita" image="/quiita.png"  />
+        <Container items={zennArticles} name="Zenn" />
+        <Container items={overflows} name="StackOverFlow" image="/stackoverflow.jpeg"  />
       </div>
     </>
   );
