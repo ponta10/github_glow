@@ -16,7 +16,7 @@ import { WatchArticleButton } from "@/components/Button/WatchArticle";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
-  
+
   if (!session) {
     return (
       <div
