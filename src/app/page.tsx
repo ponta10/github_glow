@@ -12,6 +12,7 @@ import { DesertScene } from "@/components/3d/DesertScreen";
 import { getDate } from "@/function/getDate";
 import { ranks } from "@/utils/const";
 import { Click } from "@/components/Modal/Click";
+import { WatchArticleButton } from "@/components/Button/WatchArticle";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
@@ -67,6 +68,7 @@ export default async function Home() {
             <span className="text-sm font-medium ml-1">contributes</span>
           </p>
           <WatchDataButton />
+          <WatchArticleButton />
           <SignOutButton />
         </div>
       </header>

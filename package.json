@@ -16,6 +16,7 @@
     "@react-three/fiber": "^8.14.5",
     "@storybook/addon-postcss": "^2.0.0",
     "@types/three": "^0.156.0",
+    "@types/xml2js": "^0.4.13",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
@@ -31,7 +32,8 @@
     "react-icons": "^4.11.0",
     "recharts": "^2.8.0",
     "simplex-noise": "^4.0.1",
-    "three": "^0.157.0"
+    "three": "^0.157.0",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.5.0",
