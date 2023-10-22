@@ -67,3 +67,12 @@ export const ranks: rankData[] = [
   { name: "flower", size: 64, image: flower, range: "2000~3999" },
   { name: "corn", size: 64, image: corn, range: "4000~" },
 ];
+
+
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}/${month}/${day}`;
+}

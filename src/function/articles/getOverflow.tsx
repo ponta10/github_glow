@@ -1,9 +1,5 @@
+import { Article } from "@/utils/types";
 import axios from "axios";
-interface Article {
-  title: string;
-  link: string;
-  pubDate: string | number;
-}
 
 export const getTrendingQuestions = async (): Promise<Article[]> => {
   try {
@@ -20,7 +16,7 @@ export const getTrendingQuestions = async (): Promise<Article[]> => {
     const overflows: Article[] = response.data.items.map((overflow: any) => ({
       title: overflow.title,
       link: overflow.link,
-      pubDate: overflow.creation_date,
+      pubDate: new Date(Number(overflow.creation_date) * 1000).toLocaleDateString(),
     }));
     return overflows;
   } catch (error) {

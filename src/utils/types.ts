@@ -27,3 +27,10 @@ export interface Repository {
 export interface RepositoryContribution {
   repository: Repository;
 }
+
+export interface Article {
+    title: string;
+    link: string;
+    pubDate: string;
+    image?: string;
+}

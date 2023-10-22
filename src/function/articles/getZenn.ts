@@ -1,21 +1,8 @@
+import { formatDate } from "@/utils/const";
+import { Article } from "@/utils/types";
 import xml2js from "xml2js";
 
-interface ZennArticle {
-  title: string;
-  link: string;
-  pubDate: string;
-  image: string;
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}/${month}/${day}`;
-}
-
-export async function fetchZennArticles(): Promise<ZennArticle[]> {
+export async function fetchZennArticles(): Promise<Article[]> {
   try {
     const response = await fetch("https://zenn.dev/feed");
 
@@ -36,7 +23,7 @@ export async function fetchZennArticles(): Promise<ZennArticle[]> {
     });
 
     const rawArticles = result.rss.channel[0].item;
-    const zennArticles: ZennArticle[] = rawArticles.map((rawArticle: any) => ({
+    const zennArticles: Article[] = rawArticles.map((rawArticle: any) => ({
       title: rawArticle.title[0],
       link: rawArticle.link[0],
       pubDate: formatDate(rawArticle.pubDate[0]),
