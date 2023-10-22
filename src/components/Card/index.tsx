@@ -23,7 +23,7 @@ export const Card: React.FC<CardProps> = ({
                     {title}
                 </div>
                 <p className="text-gray-700 text-base">
-                    Published on {date}
+                    {date}
                 </p>
             </div>
             <div className="px-6 py-4 flex items-center">

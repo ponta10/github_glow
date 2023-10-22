@@ -10,6 +10,7 @@ import { nextAuthOptions } from "@/libs/next-auth/options";
 import { GraphContainer } from "./GraphContainer";
 import { getDate } from "@/function/getDate";
 import UnauthorizedPage from "../unauthorized";
+import { WatchArticleButton } from "@/components/Button/WatchArticle";
 const PieGraph = dynamic(() => import("./PieGraph"), {
   ssr: false,
 });
@@ -43,6 +44,7 @@ const watch = async () => {
         />
         <div className="flex gap-4">
           <WatchFieldButton />
+          <WatchArticleButton />
           <SignOutButton />
         </div>
       </header>

@@ -12,15 +12,11 @@ import { DesertScene } from "@/components/3d/DesertScreen";
 import { getDate } from "@/function/getDate";
 import { ranks } from "@/utils/const";
 import { Click } from "@/components/Modal/Click";
-import { fetchArticles } from "@/function/getQiita";
-import { fetchZennArticles } from "@/function/getZenn";
+import { WatchArticleButton } from "@/components/Button/WatchArticle";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
   
-  const quiitaArticles = await fetchArticles();
-  const zennArticles = await fetchZennArticles();
-
   if (!session) {
     return (
       <div
@@ -72,6 +68,7 @@ export default async function Home() {
             <span className="text-sm font-medium ml-1">contributes</span>
           </p>
           <WatchDataButton />
+          <WatchArticleButton />
           <SignOutButton />
         </div>
       </header>
