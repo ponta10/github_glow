@@ -12,9 +12,14 @@ import { DesertScene } from "@/components/3d/DesertScreen";
 import { getDate } from "@/function/getDate";
 import { ranks } from "@/utils/const";
 import { Click } from "@/components/Modal/Click";
+import { fetchArticles } from "@/function/getQiita";
+import { fetchZennArticles } from "@/function/getZenn";
 
 export default async function Home() {
   const session = await getServerSession(nextAuthOptions);
+  
+  const quiitaArticles = await fetchArticles();
+  const zennArticles = await fetchZennArticles();
 
   if (!session) {
     return (
