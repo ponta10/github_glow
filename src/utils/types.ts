@@ -29,8 +29,8 @@ export interface RepositoryContribution {
 }
 
 export interface Article {
-    title: string;
-    link: string;
-    pubDate: string;
-    image?: string;
+  title: string;
+  link: string;
+  pubDate: string;
+  image?: string;
 }

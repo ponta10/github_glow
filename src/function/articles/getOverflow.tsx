@@ -1,6 +1,12 @@
 import { Article } from "@/utils/types";
 import axios from "axios";
 
+interface OverflowProps {
+  title: string;
+  link: string;
+  creation_date: string;
+}
+
 export const getTrendingQuestions = async (): Promise<Article[]> => {
   try {
     const response = await axios.get(
@@ -13,11 +19,15 @@ export const getTrendingQuestions = async (): Promise<Article[]> => {
         },
       },
     );
-    const overflows: Article[] = response.data.items.map((overflow: any) => ({
-      title: overflow.title,
-      link: overflow.link,
-      pubDate: new Date(Number(overflow.creation_date) * 1000).toLocaleDateString(),
-    }));
+    const overflows: Article[] = response.data.items.map(
+      (overflow: OverflowProps) => ({
+        title: overflow.title,
+        link: overflow.link,
+        pubDate: new Date(
+          Number(overflow.creation_date) * 1000,
+        ).toLocaleDateString(),
+      }),
+    );
     return overflows;
   } catch (error) {
     console.error(error);

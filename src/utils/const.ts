@@ -68,7 +68,6 @@ export const ranks: rankData[] = [
   { name: "corn", size: 64, image: corn, range: "4000~" },
 ];
 
-
 export function formatDate(dateString: string): string {
   const date = new Date(dateString);
   const year = date.getFullYear();
