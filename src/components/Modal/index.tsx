@@ -32,6 +32,8 @@ export const Modal: React.FC<ModalProps> = ({
     <div
       className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-80 flex justify-center items-center z-50"
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
     >
       <div
         className="relative bg-white p-10 rounded-lg shadow-lg transition-transform transform duration-500 ease-out"
@@ -45,6 +47,7 @@ export const Modal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         <AiOutlineClose
+          role="button"
           className="absolute top-4 right-4 cursor-pointer"
           onClick={onClose}
         />
