@@ -1,0 +1,44 @@
+{
+  "data": {
+    "viewer": {
+      "login": "test",
+      "name": "Test",
+      "email": "test@example.com",
+      "avatarUrl": "http://avatar.url",
+      "contributionsCollection": {
+        "totalRepositoryContributions": 5,
+        "contributionCalendar": {
+          "weeks": [
+            {
+              "contributionDays": [
+                { "date": "2023-01-01", "contributionCount": 4 },
+                { "date": "2023-01-02", "contributionCount": 5 },
+                { "date": "2023-01-03", "contributionCount": 3 },
+                { "date": "2023-01-04", "contributionCount": 4 },
+                { "date": "2023-01-05", "contributionCount": 4 }
+              ]
+            }
+          ]
+        },
+        "totalCommitContributions": 100,
+        "repositoryContributions": {
+          "nodes": [
+            {
+              "repository": {
+                "name": "test-repo",
+                "languages": {
+                  "edges": [
+                    { "size": 150, "node": { "name": "JavaScript" } },
+                    { "size": 100, "node": { "name": "PHP" } },
+                    { "size": 50, "node": { "name": "TypeScript" } },
+                    { "size": 25, "node": { "name": "Go" } }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}
